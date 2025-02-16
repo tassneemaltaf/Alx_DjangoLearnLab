@@ -1,1 +1,1 @@
-# Alx_DjangoLearnLab
+This folder contains tasks regarding Django.
