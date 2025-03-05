@@ -11,5 +11,5 @@ def get_books_in_library(library_name):
   print([book.title for book in books])
 
 def get_librarian_for_library(library_name):
-    librarian = Librarian.objects.get(library__name=library_name)
-    print(librarian.name)
+    Librarian.objects.get(library=library_name);
+    print(Librarian.name)
