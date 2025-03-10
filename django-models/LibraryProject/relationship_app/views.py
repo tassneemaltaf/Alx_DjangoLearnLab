@@ -4,13 +4,12 @@ from .models import Library
 from django.views.generic.detail import DetailView
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
-from django.urls import reverse_lazy
 from django.views import View
 
 class RegisterView(View):
     def get(self, request):
         form = UserCreationForm()
-        return render(request, "registration/register.html", {"form": form})
+        return render(request, "register.html", {"form": form})
 
     def post(self, request):
         form = UserCreationForm(request.POST)
@@ -18,7 +17,7 @@ class RegisterView(View):
             user = form.save()
             login(request, user)  # Log in the user after registration
             return redirect("list_books")  # Redirect to the home page or another page
-        return render(request, "registration/register.html", {"form": form})
+        return render(request, "register.html", {"form": form})
 
 def list_books(request):
   books = Book.objects.all()
