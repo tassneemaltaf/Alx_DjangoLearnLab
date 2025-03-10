@@ -8,7 +8,7 @@ from .views import LibraryDetailView
 urlpatterns = [
     path("", view=list_books, name="list_books"),
     path("library/", LibraryDetailView.as_view(), name="LibraryDetailView"),
-    path("register/", RegisterView.as_view(template_name='register.html'), name="register"),
+    path("register/", RegisterView.as_view(template_name='registration/register.html'), name="register"),
     path("login/", LoginView.as_view(template_name='registration/login.html'), name="login"),
-    path("logout/", LogoutView.as_view(template_name='registration/logout.html'), name="logout")
+    path("logout/", LogoutView.as_view(template_name='registration/logout.html'), name="logout"),
 ]
