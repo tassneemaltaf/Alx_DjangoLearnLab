@@ -7,7 +7,7 @@ from django.contrib.auth import login
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 
-class SignUpView(CreateView):
+class RegistrationView(CreateView):
   form_class = UserCreationForm
   success_url = reverse_lazy("login")
   template_name = "registration/registration.html"
@@ -22,7 +22,7 @@ class LibraryDetailView(DetailView):
   model = Library
   template_name = 'relationship_app/library_detail.html'
 
-def get_context_data(self, **kwargs) -> dict[str, Any]:
+def get_context_data(self, **kwargs) -> dict[str, any]:
   context = super().get_context_data(**kwargs)
   library = self.get_object()
   context["books"] = Book.objects.filter(library=library)
