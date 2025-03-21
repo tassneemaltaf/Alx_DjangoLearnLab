@@ -25,6 +25,9 @@ class ApiTests(APITestCase):
     self.assertEqual(response.status_code, status.HTTP_200_OK)
 
   def test_update_view(self):
+    #Test if user is logged in
+    login_success = self.client.login(username="testuser", password="testpass")
+    self.assertTrue(login_success, "Login failed")
     updated_data = {'title': 'Updated Title', 'publication_year': 2023, 'author': 'Tass'}
 
     response = self.client.put("books/update/<int:pk>", updated_data)
