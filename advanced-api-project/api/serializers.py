@@ -1,16 +1,18 @@
 from rest_framework import serializers
 from .models import Book, Author
+import datetime
 
-#This is the Book serializer, it contains a validation to verify if the publication year is not greater than the current year
+#This is the Book serializer, it contains a field-level validation method to verify if the publication year is not in the future
 class BookSerializer(serializers.ModelSerializer):
   class Meta:
     model = Book
     fields = ['title', 'publication_year', 'author']
   
-  def validate(self, data):
-    if data['publication_year'] > 2025:
+  def validate_publication_year(self, value):
+    current_year = datetime.date.today().year
+    if value > current_year:
       raise serializers.ValidationError("Invalid year.")
-    return data
+    return value
   
 #This is the Author serializer, it contains a nested book serializer, this allows the api to return the author data along with its related books
 class AuthorSerializer(serializers.ModelSerializer):
