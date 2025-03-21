@@ -1,7 +1,7 @@
-from django.test import TestCase
+from django.test import APITestCase
 from rest_framework import status
 
-class ApiTests(TestCase):
+class ApiTests(APITestCase):
   def setUp(self):
     return super().setUp()
   
