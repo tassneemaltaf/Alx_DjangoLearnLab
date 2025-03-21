@@ -4,7 +4,7 @@ from .models import Book, Author
 from .serializers import BookSerializer, AuthorSerializer
 from rest_framework import serializers
 from rest_framework import filters
-from django_filters import rest_framework
+#from django_filters import rest_framework
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 #The first view is to list the books view, it has permissions to read only for unauthenticated users, and requires authentication for any modification operation
@@ -29,7 +29,7 @@ class DetailView(generics.RetrieveAPIView):
 class CreateView(generics.CreateAPIView):
   queryset = Book.objects.all()
   serializer_class = BookSerializer
-  permission_classes = [IsAuthenticated]
+  #permission_classes = [IsAuthenticated]
 
   def perform_create(self, serializer):
     title = serializer.validated_data.get('title')
