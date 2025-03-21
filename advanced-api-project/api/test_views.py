@@ -18,6 +18,7 @@ class ApiTests(APITestCase):
 
     response = self.client.post("/books/create/", data)
     self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+    self.assertEqual(response.data['title'], 'New Book')
 
   def test_detail_view(self):
     response = self.client.get("books/<int:pk>/")
