@@ -3,7 +3,7 @@ from rest_framework import generics
 from .models import Book, Author
 from .serializers import BookSerializer, AuthorSerializer
 from rest_framework import serializers
-from rest_framework import django_filters
+from rest_framework import filters
 from django_filters import rest_framework
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
@@ -13,8 +13,9 @@ class ListView(generics.ListAPIView):
   queryset = Book.objects.all()
   serializer_class = BookSerializer
   permission_classes = [IsAuthenticatedOrReadOnly]
-  filter_backends = [django_filters.SearchFilter]
+  filter_backends = [filters.SearchFilter, filters.OrderingFilter]
   search_fields = ['title', 'author']
+  ordering_fields = ['publication_year']
 
 #This is to list a specific book based on its primary key
 #Permissions are same as list
