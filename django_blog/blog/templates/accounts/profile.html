@@ -1,8 +1,23 @@
 {% if user.is_authenticated %} You are logged in as {{ user }}.
-<form action="{% url 'logout' %}" method="post">
+<form action="{% url 'posts' %}" method="post">
   {% csrf_token %}
-  <button type="submit">Log Out</button>
+  <label for="username">
+    Change Username
+    <input type="username" name="username" id="username" />
+    <button type="submit">Save Username</button>
+  </label>
+  <form action="password_change" method="post">
+    <label for="username">
+      Change Password
+      <input type="password" id="password" />
+      <button type="submit">Save Password</button>
+    </label>
+  </form>
+  <form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
+  {% else %} You are not logged in.
+  <a href="{% url 'login' %}">Click here to log in.</a>
+  {% endif %}
 </form>
-{% else %} You are not logged in.
-<a href="{% url 'login' %}">Click here to log in.</a>
-{% endif %}
