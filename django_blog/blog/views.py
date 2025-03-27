@@ -4,6 +4,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
+from rest_framework import generics
+from .models import Post
+from .serializers import PostSerializer
 
 User = get_user_model
 
@@ -23,3 +26,23 @@ def submit(request):
     user.save()
     return redirect("profile")
   return render(request, "blog/profile.html", {"msg": "username updated"})
+
+class ListView(generics.ListAPIView):
+  queryset = Post.objects.all()
+  serializer = PostSerializer
+
+class DetailView(generics.RetrieveAPIView):
+  queryset = Post.objects.all()
+  serializer = PostSerializer
+
+class CreateView(generics.CreateAPIView):
+  queryset = Post.objects.all()
+  serializer = PostSerializer
+
+class UpdateView(generics.UpdateAPIView):
+  queryset = Post.objects.all()
+  serializer = PostSerializer
+
+class DeleteView(generics.DestroyAPIView):
+  queryset = Post.objects.all()
+  serializer = PostSerializer
