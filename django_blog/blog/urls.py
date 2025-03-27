@@ -1,6 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from .views import RegisterView, submit
+from .views import RegisterView, submit, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -11,5 +11,10 @@ urlpatterns = [
   path('', TemplateView.as_view(template_name='blog/base.html'), name='home'),
   path('posts/', submit, name='posts'),
   path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
-  path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done')
+  path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(), name='password_change_done'),
+  path('post/', ListView.as_view(), name='list_view'),
+  path('post/new/', CreateView.as_view(), name='create_view'),
+  path('post/<int:pk>/', DetailView.as_view(), name='detail_view'),
+  path('post/<int:pk>/update', UpdateView.as_view(), name='update_view'),
+  path('post/<int:pk>/delete', DeleteView.as_view(), name='delete_view'),
 ]
