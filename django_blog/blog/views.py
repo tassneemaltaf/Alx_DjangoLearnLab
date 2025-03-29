@@ -34,7 +34,7 @@ class ListView(generic.ListView):
 
 class DetailView(generic.DetailView):
   model = Post
-  template_name = "blog/detail_posts.html"
+  template_name = "blog/view_posts.html"
   context_object_name = 'post'
 
 class CreateView(LoginRequiredMixin, generic.CreateView):
