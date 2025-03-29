@@ -1,0 +1,9 @@
+{% extends "blog/base.html" %} {% block content %}
+<h1>Create Blog Post</h1>
+<div class="content">
+  <form action="{% url 'create_view' %}" method="post">
+    {% csrf_token %} {{ form.as_p }}
+    <button type="submit">Publish</button>
+  </form>
+</div>
+{% endblock %}
