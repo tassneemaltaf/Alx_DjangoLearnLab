@@ -2,7 +2,7 @@ from django.views.generic.edit import CreateView
 from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
 from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.views import generic
@@ -37,7 +37,7 @@ class DetailView(generic.DetailView):
   template_name = "blog/view_posts.html"
   context_object_name = 'post'
 
-class CreateView(LoginRequiredMixin, generic.CreateView):
+class CreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
   model = Post
   fields = ['title', 'content']
   template_name = "blog/create_posts.html"
@@ -47,14 +47,14 @@ class CreateView(LoginRequiredMixin, generic.CreateView):
     form.instance.author = self.request.user
     return super().form_valid(form)
 
-class UpdateView(generic.UpdateView):
+class UpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
   model = Post
   fields = ['title', 'content']
   template_name = "blog/update_posts.html"
   context_object_name = 'post'
   success_url = reverse_lazy('posts')
 
-class DeleteView(generic.DeleteView):
+class DeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
   model = Post
   template_name = "blog/delete_posts.html"
   context_object_name = 'post'
