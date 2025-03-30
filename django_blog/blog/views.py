@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import get_user_model
 from django.views import generic
 from .models import Post
+from .forms import CommentForm
 
 User = get_user_model
 
@@ -29,18 +30,18 @@ def submit(request):
 
 class ListView(generic.ListView):
   model = Post
-  template_name = "blog/list_posts.html"
+  template_name = "blog/post_list.html"
   context_object_name = 'posts'
 
 class DetailView(generic.DetailView):
   model = Post
-  template_name = "blog/view_posts.html"
+  template_name = "blog/post_detail.html"
   context_object_name = 'post'
 
 class CreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
   model = Post
   fields = ['title', 'content']
-  template_name = "blog/create_posts.html"
+  template_name = "blog/post_form.html"
   success_url = reverse_lazy('posts')
 
   def form_valid(self, form):
@@ -50,12 +51,12 @@ class CreateView(LoginRequiredMixin, UserPassesTestMixin, generic.CreateView):
 class UpdateView(LoginRequiredMixin, UserPassesTestMixin, generic.UpdateView):
   model = Post
   fields = ['title', 'content']
-  template_name = "blog/update_posts.html"
+  template_name = "blog/post_update.html"
   context_object_name = 'post'
   success_url = reverse_lazy('posts')
 
 class DeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
   model = Post
-  template_name = "blog/delete_posts.html"
+  template_name = "blog/post_delete.html"
   context_object_name = 'post'
   success_url = reverse_lazy('posts')
