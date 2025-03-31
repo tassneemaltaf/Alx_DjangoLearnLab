@@ -3,10 +3,10 @@ from django.urls import reverse_lazy
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin , UserPassesTestMixin
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import get_user_model
 from django.views import generic
-from .models import Post
+from .models import Post, Comment
 from .forms import CommentForm
 
 User = get_user_model
@@ -26,7 +26,7 @@ def submit(request):
     user.username = request.POST["username"]
     user.save()
     return redirect("profile")
-  return render(request, "blog/profile.html", {"msg": "username updated"})
+  return render(request, "blog/profile.html", {})
 
 class ListView(generic.ListView):
   model = Post
@@ -60,3 +60,19 @@ class DeleteView(LoginRequiredMixin, UserPassesTestMixin, generic.DeleteView):
   template_name = "blog/post_delete.html"
   context_object_name = 'post'
   success_url = reverse_lazy('posts')
+
+def comment(request, pk):
+  post = get_object_or_404(Post, pk=pk)
+
+  if request.method == "POST":
+    form = CommentForm(request.POST)
+    if form.is_valid():
+      comment = form.save(commit=False)
+      comment.post = post
+      comment.author = request.user
+      comment.save()
+    return redirect('detail_view', pk=pk)
+  
+  comments = Comment.objects.filter(post=post)
+  form = CommentForm()
+  return render(request, "blog/post_detail.html", {"post": post, "form": form, "comments" : comments})

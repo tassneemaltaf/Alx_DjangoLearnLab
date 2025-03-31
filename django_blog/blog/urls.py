@@ -1,6 +1,6 @@
 from django.urls import path
 from django.views.generic import TemplateView
-from .views import RegisterView, submit, ListView, CreateView, UpdateView, DeleteView, DetailView
+from .views import RegisterView, submit, ListView, CreateView, UpdateView, DeleteView, DetailView , comment
 from django.contrib.auth import views as auth_views
 
 urlpatterns = [
@@ -17,4 +17,5 @@ urlpatterns = [
   path('post/<int:pk>/', DetailView.as_view(), name='detail_view'),
   path('post/<int:pk>/update/', UpdateView.as_view(), name='update_view'),
   path('post/<int:pk>/delete/', DeleteView.as_view(), name='delete_view'),
+  path('post/<int:pk>/comment', comment, name='comment'),
 ]

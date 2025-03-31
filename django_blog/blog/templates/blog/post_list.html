@@ -3,13 +3,14 @@
 <div class="content">
   <ul>
     {% for post in posts %}
-    <li>
-      {{ post.title }} <br />
-      {{ post.content }} <br />
-      <h6>{{ post.published_date }}</h6>
-      <br />
-      <h5>Posted by: {{ post.author }}</h5>
-    </li>
+      <li>
+        {{ post.title }} <br />
+        {{ post.content }} <br />
+        <h6>{{ post.published_date }}</h6>
+        <br />
+        <h5>Posted by: {{ post.author }}</h5>
+        <button><a href="{% url 'comment' post.pk %}">Leave a comment</a><button>
+      </li>
     {% endfor %}
   </ul>
 </div>

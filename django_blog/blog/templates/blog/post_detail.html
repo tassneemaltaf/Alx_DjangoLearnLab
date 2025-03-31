@@ -6,5 +6,25 @@
     <h6>{{ post.published_date }}</h6>
     <br />
     <h5>Posted by: {{ post.author }}</h5>
+
+    <h3>Comments</h3>
+    <ul>
+      {% for comment in comments %}
+        <li>
+            {{ comment.author }} <br />
+            {{ comment.content }}
+        </li>
+        {% empty %}
+          <li>No comments yet.</li>
+      {% endfor %}
+    </ul>
+
+
+    <h3>Leave a comment</h3>
+    <form action="{% url 'comment' post.pk %}" method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Comment</button>
+    </form>
   </div>
 {% endblock %}
